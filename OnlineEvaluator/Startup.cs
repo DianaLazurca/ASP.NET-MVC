@@ -9,6 +9,7 @@ namespace OnlineEvaluator
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            AddAdminUsers();
         }
     }
 }

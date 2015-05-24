@@ -7,6 +7,10 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using OnlineEvaluator.Models;
 using OnlineEvaluator.Repositories;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Linq;
+using System.Data.Entity;
+
 
 namespace OnlineEvaluator
 {
@@ -64,6 +68,35 @@ namespace OnlineEvaluator
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+        }
+
+        public void AddAdminUsers()
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+
+            var userStore = new UserStore<ApplicationUser>(context);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            if (!context.Roles.Any(r => r.Name == "Admin"))
+            {
+                context.Roles.Add(new IdentityRole { Name = "Admin" });
+                context.SaveChanges();
+            }
+
+            if (!context.Roles.Any(r => r.Name == "Student"))
+            {
+                context.Roles.Add(new IdentityRole { Name = "Student" });
+                context.SaveChanges();
+            }
+
+            if (!context.Users.Any(u => u.UserName == "admin@evaluator.com"))
+            {
+                var user = new ApplicationUser { UserName = "admin@evaluator.com", Email = "admin@evaluator.com" };
+                IdentityResult result = userManager.Create(user, "passW0rd!");
+
+                userManager.AddToRole(user.Id, "Admin");
+                context.SaveChanges();
+            }
         }
     }
 }
