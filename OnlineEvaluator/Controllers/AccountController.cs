@@ -156,7 +156,7 @@ namespace OnlineEvaluator.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email};
 
                 ApplicationDbContext context = new ApplicationDbContext();
 
