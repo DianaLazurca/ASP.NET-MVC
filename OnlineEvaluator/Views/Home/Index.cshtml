@@ -2,58 +2,91 @@
     ViewBag.Title = "Home Page";
 }
 @using Microsoft.AspNet.Identity
-<div class="row">
 
-    @if (User.IsInRole("Admin"))
-    {
-        
-       <aside class="col-md-4">
-           <ul style="list-style: none;">
-               <li>
-                   <span class="row">
-                       <p> Domain 1</p>
-                       @Html.ActionLink("Edit", "Edit", "Domain")
-                       @Html.ActionLink("Remove", "Remove", "Domain")
-                   </span>
-               </li>
 
-               <li>
-                   <span class="row">
-                       <p> Domain 2</p>
-                       @Html.ActionLink("Edit", "Edit", "Domain")
-                       @Html.ActionLink("Remove", "Remove", "Domain")
-                   </span>
-               </li>
-           </ul>
-           @Html.ActionLink("Create New", "Create", "Domain")
-       </aside>
-        
-        <article class="col-md-8">
-            <section id="allSubdomains">
-                <ul style="list-style: none;">
-                    <li>
-                        <span class="row">
-                            <p>Subdomain 1</p>
-                            @Html.ActionLink("Edit", "Edit", "Subdomain")
-                            @Html.ActionLink("Remove", "Remove", "Subdomain")
-                        </span>
-                    </li>
+@if (User.IsInRole("Admin"))
+{
+    <div style="margin-top: 20px;" class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Online Evaluator - Admin</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <aside class="col-md-4">
+                    <div style="margin-top: 10px;" class="page-header">
+                        <h4 class="text-center" id="type">Domains</h4>
+                    </div>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active">
+                            Domain 1<i class="glyphicon glyphicon-remove pull-right"></i><i style="margin-right: 5px;" class="glyphicon glyphicon-edit pull-right"></i>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            Domain 2<i class="glyphicon glyphicon-remove pull-right"></i><i style="margin-right: 5px;" class="glyphicon glyphicon-edit pull-right"></i>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            Domain 3<i class="glyphicon glyphicon-remove pull-right"></i><i style="margin-right: 5px;" class="glyphicon glyphicon-edit pull-right"></i>
+                        </a>
+                    </div>
+                    <div class="form-group text-center">
+                        <label class="control-label">Add a new domain:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-education"></i></span>
+                            <input type="text" class="form-control">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Add</button>
+                            </span>
+                        </div>
+                    </div>
+                </aside>
 
-                    <li>
-                        <span class="row">
-                            <p> Subdomain 2</p>
-                            @Html.ActionLink("Edit", "Edit", "Subdomain")
-                            @Html.ActionLink("Remove", "Remove", "Subdomain")
-                        </span>
-                    </li>
-                </ul>
-                @Html.ActionLink("Create New", "Create", "Subdomain")
-            </section>
-        </article>
-    }
-    else
-    {
-        
-    }
+                <aside class="col-md-8">
+                    <div style="margin-top: 10px;" class="page-header">
+                        <h4 class="text-center" id="type">Subdomains</h4>
+                    </div>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active">
+                            Subdomain 1<i class="glyphicon glyphicon-remove pull-right"></i><i style="margin-right: 5px;" class="glyphicon glyphicon-edit pull-right"></i>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            Subdomain 2<i class="glyphicon glyphicon-remove pull-right"></i><i style="margin-right: 5px;" class="glyphicon glyphicon-edit pull-right"></i>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            Subdomain 3<i class="glyphicon glyphicon-remove pull-right"></i><i style="margin-right: 5px;" class="glyphicon glyphicon-edit pull-right"></i>
+                        </a>
+                    </div>
 
-</div>
+                    <div class="form-group col-md-offset-3 col-md-6 text-center">
+                        <label class="control-label">Add a new subdomain:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-education"></i></span>
+                            <input type="text" class="form-control">
+                            <span class="input-group-btn pull-left">
+                                <button class="btn btn-default" type="button">Add</button>
+                            </span>
+                        </div>
+                    </div>
+
+                </aside>
+            </div>
+
+            <div class="row">
+                <aside class="col-md-8 col-md-offset-4">
+                    <div style="margin-top: 10px;" class="page-header">
+                        <h4 class="text-center" id="type">Questions</h4>
+                    </div>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active">
+                            Question 1<i class="glyphicon glyphicon-remove pull-right"></i><i style="margin-right: 5px;" class="glyphicon glyphicon-edit pull-right"></i>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            Question 2<i class="glyphicon glyphicon-remove pull-right"></i><i style="margin-right: 5px;" class="glyphicon glyphicon-edit pull-right"></i>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            Question 3<i class="glyphicon glyphicon-remove pull-right"></i><i style="margin-right: 5px;" class="glyphicon glyphicon-edit pull-right"></i>
+                        </a>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+}
