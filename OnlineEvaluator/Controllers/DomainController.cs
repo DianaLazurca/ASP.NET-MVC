@@ -14,11 +14,10 @@ namespace OnlineEvaluator.Controllers
         {
             return View();
         }
-
         
         public JsonResult GetAllDomains()
         {
-            return Json(DBManager.GetAllDomains().ToList(), JsonRequestBehavior.AllowGet);
+            return Json(DomainRepository.GetAllDomains().ToList(), JsonRequestBehavior.AllowGet);
         }
         // GET: Domain/Details/5
         public ActionResult Details(int id)
@@ -38,7 +37,7 @@ namespace OnlineEvaluator.Controllers
         {
             try
             {
-               string message = DBManager.AddNewDomain(domainName);
+               string message = DomainRepository.AddNewDomain(domainName);
                
                if (message.Contains("success"))
                {
@@ -89,13 +88,20 @@ namespace OnlineEvaluator.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                string message = DomainRepository.RemoveDomainById(id);
+                if (!message.Equals("deleted"))
+                {
+                    return new HttpStatusCodeResult(404);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(200);
+                }
+                
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(404);
             }
         }
     }

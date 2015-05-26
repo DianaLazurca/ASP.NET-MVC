@@ -54,16 +54,32 @@ $('#allDomains').on('click', 'i[class ~= "glyphicon-remove"]', function () {
 
     $.ajax({
         method: "POST",
-        url: "http://localhost/booking/Hotel/Delete/",
-        data: { id: parseInt(hotelId) },
-
-        success: function () {
-            $('#hotelsContainer table tr[id=' + hotelId + ']').remove();
+        url: "http://localhost:7029/Domain/Delete/" + parseInt(domainId),
+        statusCode: {
+            200: function () {
+                console.log("un domeniu s-a sters 200 code");
+                parent.remove();
+            },
+            404: function () {
+                console.log("Something went wrong");
+            }
         }
 
     });
+});
 
-   // console.log(parent);
+$('#allDomains').on('click', 'i[class ~= "glyphicon-edit"]', function () {
+
+    var parent = this.parentElement;
+    var domainId = this.parentElement.attributes[2].value;
+    console.log("Edit element " + domainId);
+
+   //<a href="#" class="list-group-item">
+   //                         Domain 3<i class="glyphicon glyphicon-remove pull-right"></i><i style="margin-right: 5px;" class="glyphicon glyphicon-edit pull-right"></i>
+    //                     </a> 
+    console.log($('#allDomains a[data-id = '+domainId+']').text());
+    var NewElem = $('<a href="#" class="list-group-item" data-id= "' + id + '"> ' + newDomainName + '<i class="glyphicon glyphicon-remove pull-right"></i><i style="margin-right: 5px;" class="glyphicon glyphicon-edit pull-right"></i></a>');
+    
 });
 
 $('#addNewSubdomainButton').click(function () {

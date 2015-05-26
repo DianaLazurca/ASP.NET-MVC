@@ -6,7 +6,7 @@ using System.Web;
 
 namespace OnlineEvaluator.Repositories
 {
-    public static class DBManager
+    public static class DomainRepository
     {
         public static string AddNewDomain(String domainName)
         {
@@ -28,6 +28,25 @@ namespace OnlineEvaluator.Repositories
                 return "error";
             }
 
+        }
+
+        // sterge si subdomeniile + intrebarile asociate
+        public static string RemoveDomainById(int id)
+        {
+            string result = "does not exist";
+
+            using (var context = new ApplicationDbContext())
+            {
+                var domain = context.Domains.FirstOrDefault(x => x.Id == id);
+                if (domain != null)
+                {
+                    context.Domains.Remove(domain);
+                    context.SaveChanges();
+                    result = "deleted";
+                } 
+            }
+
+            return result;
         }
 
         public static List<Domain> GetAllDomains()
