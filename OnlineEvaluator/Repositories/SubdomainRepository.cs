@@ -14,7 +14,7 @@ namespace OnlineEvaluator.Repositories
             {
                 if (!context.Subdomains.Any(sd => sd.Name.ToLower() == subdomainName.ToLower()))
                 {
-                    if (!context.Domains.Any(d => d.Id == domainId))
+                    if (context.Domains.Any(d => d.Id == domainId))
                     {
                         Subdomain subdomain = new Subdomain { Name = subdomainName, DomainId = domainId };
                         context.Subdomains.Add(subdomain);

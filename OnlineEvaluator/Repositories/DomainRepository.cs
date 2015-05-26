@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace OnlineEvaluator.Repositories
 {
@@ -37,6 +38,7 @@ namespace OnlineEvaluator.Repositories
 
             using (var context = new ApplicationDbContext())
             {
+             
                 var domain = context.Domains.FirstOrDefault(x => x.Id == id);
                 if (domain != null)
                 {
@@ -57,6 +59,23 @@ namespace OnlineEvaluator.Repositories
                 allDomains = context.Domains.ToList();
             }
             return allDomains;
+        }
+
+        public static List<Subdomain> GetSubdomainsForDomainById(int id)        
+        {
+
+            using (var context = new ApplicationDbContext())
+            {
+                Domain domain = context.Domains.Include("Subdomains")
+                    .Where(x => x.Id == id)
+                    .FirstOrDefault();
+
+                if (domain != null)
+                {
+                    return domain.Subdomains.ToList();
+                }
+            }
+            return null;
         }
     }
 }

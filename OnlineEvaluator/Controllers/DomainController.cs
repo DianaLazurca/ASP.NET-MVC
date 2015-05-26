@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OnlineEvaluator.Repositories;
+using OnlineEvaluator.Models;
 
 namespace OnlineEvaluator.Controllers
 {
@@ -52,6 +53,23 @@ namespace OnlineEvaluator.Controllers
             {
                 return new HttpStatusCodeResult(401, "Error when adding a new domain");
             }
+        }
+
+        //get
+        public ActionResult GetSubdomains(int id)
+        {
+            try
+            {
+                List<Subdomain> allSubdomains = DomainRepository.GetSubdomainsForDomainById(id);
+
+                return Json(allSubdomains.ToList(), JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(404);
+            }
+           
+            
         }
 
         // GET: Domain/Edit/5

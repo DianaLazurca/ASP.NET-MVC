@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using OnlineEvaluator.Repositories;
+using OnlineEvaluator.Models;
 
 namespace OnlineEvaluator.Controllers
 {
@@ -28,17 +30,23 @@ namespace OnlineEvaluator.Controllers
 
         // POST: Subdomain/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(int domainId, string subdomainName)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                Subdomain subdomain = SubdomainRepository.AddSubdomain(domainId, subdomainName);
+                if (subdomain != null)
+                {
+                    return Json(new { status = 201, id = subdomain.Id });
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(404);
+                }
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(404);
             }
         }
 

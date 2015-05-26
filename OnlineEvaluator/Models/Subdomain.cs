@@ -5,6 +5,7 @@ namespace OnlineEvaluator.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Web.Script.Serialization;
 
     public partial class Subdomain
     {
@@ -21,6 +22,7 @@ namespace OnlineEvaluator.Models
         [StringLength(250)]
         public string Name { get; set; }
 
+        [ScriptIgnore]
         public virtual Domain Domain { get; set; }
 
         public virtual ICollection<Question> Questions { get; set; }
