@@ -43,7 +43,7 @@ namespace OnlineEvaluator.Repositories
                     context.Domains.Remove(domain);
                     context.SaveChanges();
                     result = "deleted";
-                } 
+                }
             }
 
             return result;
