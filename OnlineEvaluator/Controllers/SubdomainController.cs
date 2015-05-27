@@ -41,12 +41,12 @@ namespace OnlineEvaluator.Controllers
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(404);
+                    return new HttpStatusCodeResult(409);
                 }
             }
             catch
             {
-                return new HttpStatusCodeResult(404);
+                return new HttpStatusCodeResult(409);
             }
         }
 

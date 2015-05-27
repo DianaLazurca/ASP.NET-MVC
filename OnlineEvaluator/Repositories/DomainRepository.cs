@@ -9,26 +9,22 @@ namespace OnlineEvaluator.Repositories
 {
     public static class DomainRepository
     {
-        public static string AddNewDomain(String domainName)
+        public static Domain AddNewDomain(String domainName)
         {
-            if (domainName != null)
+            using (var context = new ApplicationDbContext())
             {
-                Domain domain = new Domain
+                if ((domainName != null) && (!context.Domains.Any(d => d.Name.ToLower() == domainName.ToLower())))
                 {
-                    Name = domainName
-                };
-                using (var context = new ApplicationDbContext())
-                {
+                    Domain domain = new Domain { Name = domainName };
                     context.Domains.Add(domain);
                     context.SaveChanges();
+
+                    return domain;
                 }
-                return "success" + domain.Id;
-            }
-            else
-            {
-                return "error";
+
             }
 
+            return null;
         }
 
         // sterge si subdomeniile + intrebarile asociate
@@ -38,7 +34,7 @@ namespace OnlineEvaluator.Repositories
 
             using (var context = new ApplicationDbContext())
             {
-             
+
                 var domain = context.Domains.FirstOrDefault(x => x.Id == id);
                 if (domain != null)
                 {
@@ -61,7 +57,7 @@ namespace OnlineEvaluator.Repositories
             return allDomains;
         }
 
-        public static List<Subdomain> GetSubdomainsForDomainById(int id)        
+        public static List<Subdomain> GetSubdomainsForDomainById(int id)
         {
 
             using (var context = new ApplicationDbContext())

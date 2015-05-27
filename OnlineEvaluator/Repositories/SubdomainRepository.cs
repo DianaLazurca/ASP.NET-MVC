@@ -12,9 +12,9 @@ namespace OnlineEvaluator.Repositories
         {
             using (var context = new ApplicationDbContext())
             {
-                if (!context.Subdomains.Any(sd => sd.Name.ToLower() == subdomainName.ToLower()))
+                if (context.Domains.Any(d => d.Id == domainId))
                 {
-                    if (context.Domains.Any(d => d.Id == domainId))
+                    if (!context.Subdomains.Any(sd => (sd.Name.ToLower() == subdomainName.ToLower()) && (sd.DomainId == domainId)))
                     {
                         Subdomain subdomain = new Subdomain { Name = subdomainName, DomainId = domainId };
                         context.Subdomains.Add(subdomain);

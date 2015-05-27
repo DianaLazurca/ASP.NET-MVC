@@ -38,20 +38,19 @@ namespace OnlineEvaluator.Controllers
         {
             try
             {
-               string message = DomainRepository.AddNewDomain(domainName);
+               Domain domain = DomainRepository.AddNewDomain(domainName);
                
-               if (message.Contains("success"))
+               if (domain != null)
                {
-                   string domainId = message.Substring(7);
-                   return Json(new { status = 201, id = domainId });
+                   return Json(new { status = 201, id = domain.Id });
                } else {
-                   throw new Exception();
+                   return new HttpStatusCodeResult(409, "Error when adding a new domain");
                }
                
             }
             catch
             {
-                return new HttpStatusCodeResult(401, "Error when adding a new domain");
+                return new HttpStatusCodeResult(409, "Error when adding a new domain");
             }
         }
 
