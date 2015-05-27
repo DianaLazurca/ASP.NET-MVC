@@ -197,6 +197,7 @@
     <Compile Include="Repositories\ApplicationDbContext.cs" />
     <Compile Include="Repositories\DBManager.cs" />
     <Compile Include="Repositories\DomainRepository.cs" />
+    <Compile Include="Repositories\QuestionRepository.cs" />
     <Compile Include="Repositories\SubdomainRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

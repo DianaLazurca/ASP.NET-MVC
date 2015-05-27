@@ -30,6 +30,21 @@
                 });
             } else {
                 //TO DO: load questions for subdomain
+                $('#allQuestions').empty();
+                $.ajax({
+                    method: "GET",
+                    url: "http://localhost:7029/Subdomain/GetQuestions/" + parseInt(id),
+                    success: function (data) {
+                        console.log(data); 
+                        $.each(data, function (index) {
+                            addNewElement($("#allQuestions"), this.Text, this.Id, index);
+                        });
+                    },
+                    error: function () {
+                        console.log("something baad happened ");
+                    }
+
+                });
             }
         }
 
@@ -156,6 +171,33 @@ $('#allSubdomains').on('click', 'i[class ~= "glyphicon-remove"]', function (even
                 }
 
                 
+            },
+            404: function () {
+                console.log("Something went wrong");
+            }
+        }
+
+    });
+});
+
+$('#allQuestions').on('click', 'i[class ~= "glyphicon-remove"]', function (event)  {
+    event.preventDefault();
+    event.stopPropagation();
+
+    var parentContainer = $(this).parent();
+    var questionId = parseInt($(parentContainer).attr("data-id"));
+
+    $.ajax({
+        method: "POST",
+        url: "http://localhost:7029/Question/Delete/" + parseInt(questionId),
+        statusCode: {
+            200: function () {
+               // if ($(parentContainer).hasClass('active')) {
+                    $("#allQuestions a[data-id = '" + questionId + "']").remove();
+                   // $("#allQuestions a").first().trigger('click');
+               // }
+
+
             },
             404: function () {
                 console.log("Something went wrong");

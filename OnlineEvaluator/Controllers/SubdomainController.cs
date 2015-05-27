@@ -85,6 +85,11 @@ namespace OnlineEvaluator.Controllers
             return View();
         }
 
+        public JsonResult GetQuestions(int id)
+        {
+            return Json(SubdomainRepository.GetQuestionsForSubdomainById(id), JsonRequestBehavior.AllowGet);
+        }
+
         // POST: Subdomain/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)

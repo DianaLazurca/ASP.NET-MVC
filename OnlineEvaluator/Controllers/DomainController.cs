@@ -112,8 +112,7 @@ namespace OnlineEvaluator.Controllers
         {
             try
             {
-                string message = DomainRepository.RemoveDomainById(id);
-                if (!message.Equals("deleted"))
+                if (!DomainRepository.RemoveDomainById(id))
                 {
                     return new HttpStatusCodeResult(404);
                 }

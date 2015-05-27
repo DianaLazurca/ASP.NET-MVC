@@ -28,9 +28,8 @@ namespace OnlineEvaluator.Repositories
         }
 
         // sterge si subdomeniile + intrebarile asociate
-        public static string RemoveDomainById(int id)
-        {
-            string result = "does not exist";
+        public static bool RemoveDomainById(int id)
+        {            
 
             using (var context = new ApplicationDbContext())
             {
@@ -40,11 +39,11 @@ namespace OnlineEvaluator.Repositories
                 {
                     context.Domains.Remove(domain);
                     context.SaveChanges();
-                    result = "deleted";
+                    return true;
                 }
             }
 
-            return result;
+            return false;
         }
 
         public static List<Domain> GetAllDomains()
