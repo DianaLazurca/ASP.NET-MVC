@@ -73,5 +73,22 @@ namespace OnlineEvaluator.Repositories
             }
             return null;
         }
+
+        public static bool EditDomainName(int domainId, string name)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                Domain domain = context.Domains.FirstOrDefault(d => d.Id == domainId);
+                if ((domain != null) && (!context.Domains.Any(d => d.Name.ToLower() == name.ToLower())))
+                {
+                    domain.Name = name;
+                    context.SaveChanges();
+
+                    return true;
+                }
+
+                return false;
+            }
+        }
     }
 }

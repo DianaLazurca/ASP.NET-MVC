@@ -79,17 +79,24 @@ namespace OnlineEvaluator.Controllers
 
         // POST: Domain/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, string name, FormCollection collection)
         {
             try
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction("Index");
+                if (DomainRepository.EditDomainName(id, name))
+                {
+                    return new HttpStatusCodeResult(200);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(400);
+                }
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(400);
             }
         }
 

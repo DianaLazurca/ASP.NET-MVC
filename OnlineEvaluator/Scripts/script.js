@@ -85,7 +85,10 @@ $('#addNewDomainButton').click(function () {
 
 $('#addNewSubdomainButton').click(function () {
 
-    var newSubdomainName = $('#addNewSubdomainInput').val();
+    var newSubdomainName = $('#addNewSubdomainInput').val().trim();
+    if (!newSubdomainName) {
+        return;
+    }
     // id-ul domeniului selectat
     var id = $('#allDomains a[class ~= "active"]').attr('data-id');
     console.log(id + newSubdomainName);
@@ -124,10 +127,35 @@ $('#allDomains').on('click', 'i[class ~= "glyphicon-remove"]', function (event) 
         statusCode: {
             200: function () {
                 if ($(parentContainer).hasClass('active')) {
+                    $("#allDomains a[data-id = '" + domainId + "']").remove();
                     $("#allDomains a").first().trigger('click');
+                }            },
+            404: function () {
+                console.log("Something went wrong");
+            }
+        }
+
+    });
+});
+
+$('#allSubdomains').on('click', 'i[class ~= "glyphicon-remove"]', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    var parentContainer = $(this).parent();
+    var subdomainId = parseInt($(parentContainer).attr("data-id"));
+
+    $.ajax({
+        method: "POST",
+        url: "http://localhost:7029/Subdomain/Delete/" + parseInt(subdomainId),
+        statusCode: {
+            200: function () {
+                if ($(parentContainer).hasClass('active')) {
+                    $("#allSubdomains a[data-id = '" + subdomainId + "']").remove();
+                    $("#allSubdomains a").first().trigger('click');
                 }
-                    
-                $("#allDomains a[data-id = '" + domainId + "']").remove();
+
+                
             },
             404: function () {
                 console.log("Something went wrong");
@@ -155,6 +183,62 @@ $('#allDomains, #allSubdomains').on('click', 'i[class ~= "glyphicon-remove-circl
     makeNonEditable($(this).parents("a[class ~= 'list-group-item']").get(0)).addClass('active');
 });
 
+$('#allDomains, #allSubdomains').on('click', 'i[class ~= "glyphicon-ok-circle"]', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    var parentItem = $(this).parents("a[class ~= 'list-group-item']").get(0);
+    var elementId = parseInt($(parentItem).attr('data-id'));
+
+    var parentContainer = $(parentItem).parent();
+    var newName = $(parentContainer).find("input").val().trim();
+    var parentContainerId = $(parentContainer).attr('id');
+
+    if (!newName) {
+        return;
+    }
+
+    if (parentContainerId === "allDomains") {
+        $.ajax({
+            method: "POST",
+            url: "http://localhost:7029/Domain/Edit/" + elementId,
+            data: { 'name': newName },
+            success: function (data) {
+                $(parentItem).attr('data-name', newName);
+                makeNonEditable(parentItem).addClass('active');
+            },
+            error: function () {
+                console.log("something baad happened");
+            },
+            statuscode: {
+                409: function () {
+                    console.log("error at inserting a new subdomain");
+                }
+            }
+
+        });
+    } else {
+        $.ajax({
+            method: "POST",
+            url: "http://localhost:7029/Subdomain/Edit/" + elementId,
+            data: { 'name': newName },
+            success: function (data) {
+                $(parentItem).attr('data-name', newName);
+                makeNonEditable(parentItem).addClass('active');
+            },
+            error: function () {
+                console.log("something baad happened");
+            },
+            statuscode: {
+                409: function () {
+                    console.log("error at inserting a new subdomain");
+                }
+            }
+
+        });
+    }
+});
+
 function makeNonEditable(container) {
     var newContainer = $('<a href="#" class="list-group-item" data-id= "' + $(container).attr('data-id') + '" data-name="' + $(container).attr('data-name') + '"></a>');
     $(container).replaceWith(newContainer);
@@ -175,7 +259,7 @@ function makeEditable(container, originalName) {
     $(input).val(originalName);
 
     var okButton = $('<span class="input-group-addon"></span>');
-    $(okButton).append($('<i class="glyphicon glyphicon-ok pull-right"></i>'));
+    $(okButton).append($('<i class="glyphicon glyphicon-ok-circle pull-right"></i>'));
 
     var cancelButton = $('<span class="input-group-addon"></span>');
     $(cancelButton).append($('<i class="glyphicon glyphicon-remove-circle pull-right"></i>'));
@@ -189,7 +273,6 @@ function makeEditable(container, originalName) {
 }
 
 function addNewElement(container, elementName, id, index) {
-
     var ahref = $('<a href="#" class="list-group-item" data-id= "' + id + '" data-name="' + elementName + '">' + elementName + '<i class="glyphicon glyphicon-remove pull-right"></i><i style="margin-right: 5px;" class="glyphicon glyphicon-edit pull-right"></i></a>');
     container.append(ahref);
 
@@ -197,30 +280,4 @@ function addNewElement(container, elementName, id, index) {
         ahref.trigger('click');
     }
 }
-
-//function addNewDomain(newDomainName, id, index) {
-//    var allDomains = $('#allDomains');
-
-//    var ahref = $('<a href="#" class="list-group-item" data-id= "' + id + '" data-name="' + newDomainName + '">' + newDomainName + '<i class="glyphicon glyphicon-remove pull-right"></i><i style="margin-right: 5px;" class="glyphicon glyphicon-edit pull-right"></i></a>');
-//    allDomains.append(ahref);
-
-//    if (index == 0) {
-//        ahref.addClass("active");
-//        ahref.trigger('click');
-//    }
-//}
-
-//function addNewSubdomain(subdomainName, id, index) {
-//    var allSubdomains = $('#allSubdomains');
-
-//    var ahref = $('<a href="#" class="list-group-item" data-id="' + id + '" data-name="' + subdomainName + '">' + subdomainName + '<i class="glyphicon glyphicon-remove pull-right"></i><i style="margin-right: 5px;" class="glyphicon glyphicon-edit pull-right"></i></a>');
-
-//    allSubdomains.append(ahref);
-
-//    if (index == 0) {
-//        ahref.addClass("active");
-//        ahref.trigger('click');
-//    }
-//}
-
 

@@ -27,5 +27,40 @@ namespace OnlineEvaluator.Repositories
 
             return null;
         }
+
+        public static bool EditSubdomainName(int subdomainId, string name)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                Subdomain subdomain = context.Subdomains.FirstOrDefault(sd => sd.Id == subdomainId);
+                if ((subdomain != null) && (!context.Subdomains.Any(sd => (sd.Name.ToLower() == name.ToLower()) && (sd.DomainId == subdomain.DomainId))))
+                {
+                    subdomain.Name = name;
+                    context.SaveChanges();
+
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public static bool RemoveSubdomainById(int id)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+
+                var domain = context.Subdomains.FirstOrDefault(x => x.Id == id);
+                if (domain != null)
+                {
+                    context.Subdomains.Remove(domain);
+                    context.SaveChanges();
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

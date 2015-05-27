@@ -58,17 +58,24 @@ namespace OnlineEvaluator.Controllers
 
         // POST: Subdomain/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, string name, FormCollection collection)
         {
             try
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction("Index");
+                if (SubdomainRepository.EditSubdomainName(id, name))
+                {
+                    return new HttpStatusCodeResult(200);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(400);
+                }
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(400);
             }
         }
 
@@ -84,13 +91,19 @@ namespace OnlineEvaluator.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
+                if (SubdomainRepository.RemoveSubdomainById(id))
+                {
+                    return new HttpStatusCodeResult(200);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(400);
+                }
 
-                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(400);
             }
         }
     }
