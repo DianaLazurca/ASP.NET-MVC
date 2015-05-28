@@ -105,6 +105,5 @@ namespace OnlineEvaluator.Repositories
 
             base.OnModelCreating(modelBuilder);
         }
-
     }
 }

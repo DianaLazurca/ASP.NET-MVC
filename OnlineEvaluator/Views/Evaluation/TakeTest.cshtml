@@ -1,0 +1,52 @@
+﻿@model OnlineEvaluator.Models.Evaluation
+
+@{
+    ViewBag.Title = "TakeTest";
+}
+
+<h2>TakeTest</h2>
+
+<div class="container body-content" data-id="@Model.Id">
+
+    <div style="margin-top: 20px;" class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3 class="panel-title">Online Evaluator - Test</h3>
+                </div>
+                <div class="col-md-4">
+                    <div id="countdown" class="pull-right">Domain: <span id="tDomain">@Model.Test.Domain.Name</span>&nbsp; ; &nbsp;Time Left:&nbsp; <span>@Model.Test.Duration</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <ul class="list-group">
+                @foreach (var question in Model.Test.Questions)
+                {
+                    <li class="question list-group-item" data-id="@question.Id">
+                        <span class="badge">@question.Subdomain.Name</span>
+                        <p class="questionTitle">@question.Text</p>
+                        <div class="questionAnswersSection">
+                            <ul class="quesstionAnswers" style="list-style: none; padding-left: 20px;">
+                                @foreach (var answer in question.Answers)
+                                {
+                                    <li class="questionAsnwer" data-id="@answer.Id"><input class="pull-left answerCheck" type="checkbox" style="margin-right: 10px;" /><p class="answerBody">@answer.Text</p></li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="questionAnswersJustificationSection" style="padding-top: 10px;">
+                            <label>Justification: </label>
+                            <textarea style="width: 100%;" class="questionAnswersJustification"></textarea>
+                        </div>
+                    </li>
+                }
+
+            </ul>
+
+            <div class="testSubmitionTools pull-right" style="margin-right: 20px">
+                <button class="btn btn-primary">Finish</button>
+            </div>
+
+        </div>
+    </div>
+</div>

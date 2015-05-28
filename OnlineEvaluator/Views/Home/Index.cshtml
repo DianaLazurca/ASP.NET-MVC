@@ -104,6 +104,55 @@
         <script type="text/javascript" src="~/Scripts/addQuestion.js"></script>
     }
 }
+else
+{
+    <div style="margin-top: 20px;" class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Online Evaluator - Student</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+
+                <aside class="col-md-4">
+                    <div style="margin-top: 10px;" class="page-header">
+                        <h4 class="text-center" id="type">Select Domain</h4>
+                    </div>
+                    <div class="list-group" id="allDomains">
+                    </div>
+                </aside>
+
+                <article class="col-md-8">
+                    <aside>
+                        <div style="margin-top: 10px;" class="page-header">
+                            <h4 class="text-center" id="type">Select subdomains</h4>
+                        </div>
+                        <div id="helper" style="display: none;">Use the sidebar to select a domain</div>
+                        <div class="list-group" id="allSubdomains">
+                        </div>
+                    </aside>
+                </article>
+
+                <div id="startTestTools" class="pull-right" style="width: 25%; display: none;">
+                    <div class="row">
+                        <div class="col-sm-10" style="padding-top: 5px;">
+                            <span class="pull-left">Set time (min):&nbsp;</span>
+                            <input style="width: 50px; " class="pull-left" id="startTestTime" type="text" />
+                        </div>
+                        <div class="col-sm-2">
+                            <button id="startTestBtn" class="pull-right btn">START</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    @section Scripts
+    {
+        <script type="text/javascript" src="~/Scripts/stud.js"></script>
+    }
+}
 
 
 

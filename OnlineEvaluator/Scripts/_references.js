@@ -10,3 +10,4 @@
 /// <reference path="script.js" />
 /// <reference path="subdomains.js" />
 /// <reference path="addquestion.js" />
+/// <reference path="stud.js" />

@@ -175,6 +175,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DomainController.cs" />
+    <Compile Include="Controllers\EvaluationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
@@ -239,6 +240,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\script.js" />
+    <Content Include="Scripts\stud.js" />
     <Content Include="Scripts\subdomains.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -279,6 +281,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_AddQuestion.cshtml" />
+    <Content Include="Views\Evaluation\TakeTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
