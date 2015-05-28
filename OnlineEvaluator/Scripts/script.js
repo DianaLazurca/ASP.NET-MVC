@@ -1,4 +1,9 @@
 ﻿$(document).ready(function () {
+    $('#allQuestions').on('click', 'a', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    });
+
     $('#allDomains, #allSubdomains').on('click', 'a', function (event) {
         event.preventDefault();
 
@@ -14,6 +19,7 @@
 
             if (parentContainerId === "allDomains") {
                 $('#allSubdomains').empty();
+                $('#allQuestions').empty();
                 $.ajax({
                     method: "GET",
                     url: "http://localhost:7029/Domain/GetSubdomains/" + parseInt(id),

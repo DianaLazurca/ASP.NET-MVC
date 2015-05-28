@@ -8,3 +8,5 @@
 /// <reference path="respond.min.js" />
 /// <reference path="respond.matchmedia.addlistener.min.js" />
 /// <reference path="script.js" />
+/// <reference path="subdomains.js" />
+/// <reference path="addquestion.js" />

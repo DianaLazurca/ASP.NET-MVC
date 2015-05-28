@@ -1,4 +1,4 @@
-﻿<div class="modal" id="addQuestionModal">
+﻿<div class="modal fade" id="addQuestionModal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,28 +6,41 @@
                 <h2 class="modal-title text-center">Add a new question</h2>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" _lpchecked="1">
-                    <fieldset>
-                        <legend>Question Body</legend>
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <textarea style="max-width:1000px; resize: vertical" class="form-control" rows="3" id="textArea"></textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Answers</legend>
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <textarea style="max-width:1000px; resize: vertical" class="form-control" rows="3" id="textArea"></textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
+
+                <legend>Question Body</legend>
+                <textarea id="qBody" class="form-control" placeholder="Question Body"></textarea>
+
+                <legend>Question Answers</legend>
+                <div class="row">
+                    <div class="col-md-8">
+                        <input id="aBody" class="form-control" placeholder="Answer Body" />
+                    </div>
+                    <div class="col-md-2">
+                        <input id="aType" type="checkbox" class="form-control" name="aTypeCheckbox" />
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn" type="button" id="addAnswer">Add</button>
+                    </div>
+                </div>
+
+                <table class="qAnswers table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th> Answer </th>
+                            <th> True/False </th>
+                            <th> Remove </th>
+                        </tr>
+                    </thead>
+                    <tbody id="qAnswersTableBody"></tbody>
+                </table>
+
+                <legend>Answers Justification</legend>
+                <textarea id="aJust" class="form-control" placeholder="Answers Justification"></textarea>
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button id="cancelAddQuestion" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button id="addQuestion" type="button" class="btn btn-primary">Add Question</button>
             </div>
         </div>
     </div>
