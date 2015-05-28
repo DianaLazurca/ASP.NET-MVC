@@ -1,4 +1,5 @@
-﻿using OnlineEvaluator.Repositories;
+﻿using OnlineEvaluator.Models;
+using OnlineEvaluator.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,14 @@ namespace OnlineEvaluator.Controllers
         // GET: Question/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Question question = QuestionRepository.GetQuestionById(id);
+
+            if (question != null)
+            {
+                return Json(question, JsonRequestBehavior.AllowGet);
+            }
+
+            return new HttpStatusCodeResult(404);
         }
 
         // GET: Question/Create
@@ -29,17 +37,25 @@ namespace OnlineEvaluator.Controllers
 
         // POST: Question/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Question newQuestion)
         {
             try
             {
-                // TODO: Add insert logic here
+                Question savedQuestion = QuestionRepository.AddNewQuestion(newQuestion);
 
-                return RedirectToAction("Index");
+                if (savedQuestion != null)
+                {
+                    return Json(new { status = 201, id = savedQuestion.Id, text = savedQuestion.Text });
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(400, "Error when adding a new question");
+                }
+
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(400, "Error when adding a new question");
             }
         }
 
@@ -51,18 +67,18 @@ namespace OnlineEvaluator.Controllers
 
         // POST: Question/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Question editedQuestion)
         {
-            try
-            {
+           
                 // TODO: Add update logic here
+                bool result = QuestionRepository.EditQuestion(id, editedQuestion);
+                if (result == true)
+                {
+                    return new HttpStatusCodeResult(200);
+                }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+                return new HttpStatusCodeResult(400);
+            
         }
 
         // GET: Question/Delete/5

@@ -31,12 +31,33 @@ namespace OnlineEvaluator.Models
 
         public virtual ICollection<Answer> Answers { get; set; }
 
+        [ScriptIgnore]
         public virtual ICollection<EvaluationAnswer> EvaluationAnswers { get; set; }
 
+        [ScriptIgnore]
         public virtual ICollection<EvaluationJustification> EvaluationJustifications { get; set; }
         [ScriptIgnore]
         public virtual Subdomain Subdomain { get; set; }
 
+        [ScriptIgnore]
         public virtual ICollection<Test> Tests { get; set; }
+
+        public override bool Equals(object obj)
+        {
+
+            if (obj == null)
+            {
+                return false;
+            }
+
+            Question q = obj as Question;
+            if ((System.Object)q == null)
+            {
+                return false;
+            }
+
+
+            return Id == q.Id;
+        }
     }
 }

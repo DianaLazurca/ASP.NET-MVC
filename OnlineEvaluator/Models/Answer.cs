@@ -5,6 +5,7 @@ namespace OnlineEvaluator.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Web.Script.Serialization;
 
     public partial class Answer
     {
@@ -22,8 +23,10 @@ namespace OnlineEvaluator.Models
 
         public bool IsCorect { get; set; }
 
+        [ScriptIgnore]
         public virtual Question Question { get; set; }
 
+        [ScriptIgnore]
         public virtual ICollection<EvaluationAnswer> EvaluationAnswers { get; set; }
     }
 }

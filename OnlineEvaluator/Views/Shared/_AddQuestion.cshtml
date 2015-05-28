@@ -1,0 +1,47 @@
+﻿<div class="modal fade" id="addQuestionModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h2 class="modal-title text-center">Add a new question</h2>
+            </div>
+            <div class="modal-body">
+
+                <legend>Question Body</legend>
+                <textarea id="qBody" class="form-control" placeholder="Question Body"></textarea>
+
+                <legend>Question Answers</legend>
+                <div class="row">
+                    <div class="col-md-8">
+                        <input id="aBody" class="form-control" placeholder="Answer Body" />
+                    </div>
+                    <div class="col-md-2">
+                        <input id="aType" type="checkbox" class="form-control" name="aTypeCheckbox" />
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn" type="button" id="addAnswer">Add</button>
+                    </div>
+                </div>
+
+                <table class="qAnswers table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th> Answer </th>
+                            <th> True/False </th>
+                            <th> Remove </th>
+                        </tr>
+                    </thead>
+                    <tbody id="qAnswersTableBody"></tbody>
+                </table>
+
+                <legend>Answers Justification</legend>
+                <textarea id="aJust" class="form-control" placeholder="Answers Justification"></textarea>
+
+            </div>
+            <div class="modal-footer">
+                <button id="cancelAddQuestion" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button id="addQuestion" type="button" class="btn btn-primary">Add Question</button>
+            </div>
+        </div>
+    </div>
+</div>
