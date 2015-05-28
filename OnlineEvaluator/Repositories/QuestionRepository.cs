@@ -9,6 +9,8 @@ namespace OnlineEvaluator.Repositories
 {
     public class QuestionRepository
     {
+
+     
         public static bool RemoveQUestionById(int id)
         {
             using (var context = new ApplicationDbContext())

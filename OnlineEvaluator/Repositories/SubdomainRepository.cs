@@ -46,6 +46,20 @@ namespace OnlineEvaluator.Repositories
             }
         }
 
+        public static List<Question> GetAllQuestionsOfTypeForSubdomainId(int subdomainId, bool isMultiple)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                Subdomain subdomain = context.Subdomains.Include("Questions").Where(x => x.Id == subdomainId).SingleOrDefault();
+
+                if (subdomain != null)
+                {
+                    return subdomain.Questions.Where(x => x.IsMultiple == isMultiple).ToList();
+                }
+                return null;
+            }
+        }
+
         public static bool RemoveSubdomainById(int id)
         {
             using (var context = new ApplicationDbContext())
