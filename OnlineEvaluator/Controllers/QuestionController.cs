@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlineEvaluator.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -76,13 +77,15 @@ namespace OnlineEvaluator.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                if (QuestionRepository.RemoveQUestionById(id))
+                {
+                    return new HttpStatusCodeResult(200);
+                }
+                return new HttpStatusCodeResult(404);
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(404);
             }
         }
     }

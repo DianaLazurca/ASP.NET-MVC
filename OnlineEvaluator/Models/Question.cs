@@ -5,6 +5,7 @@ namespace OnlineEvaluator.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Web.Script.Serialization;
 
     public partial class Question
     {
@@ -33,7 +34,7 @@ namespace OnlineEvaluator.Models
         public virtual ICollection<EvaluationAnswer> EvaluationAnswers { get; set; }
 
         public virtual ICollection<EvaluationJustification> EvaluationJustifications { get; set; }
-
+        [ScriptIgnore]
         public virtual Subdomain Subdomain { get; set; }
 
         public virtual ICollection<Test> Tests { get; set; }
