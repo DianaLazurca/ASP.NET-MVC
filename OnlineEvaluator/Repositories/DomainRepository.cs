@@ -27,6 +27,13 @@ namespace OnlineEvaluator.Repositories
             return null;
         }
 
+        public static Domain GetDomainById(int id)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                return context.Domains.Where(x => x.Id == id).SingleOrDefault();
+            }
+        }
         // sterge si subdomeniile + intrebarile asociate
         public static bool RemoveDomainById(int id)
         {            

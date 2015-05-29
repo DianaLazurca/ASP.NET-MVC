@@ -61,7 +61,7 @@ namespace OnlineEvaluator.Repositories
 
             using (var context = new ApplicationDbContext())
             {
-                return context.Questions.Include(q => q.Answers).Where(q => (q.SubdomainId == subdomainId) && (q.IsMultiple == isMultiple)).ToList();
+                return context.Questions.Include(q => q.Subdomain).Include(q => q.Answers).Where(q => (q.SubdomainId == subdomainId) && (q.IsMultiple == isMultiple)).ToList();
             }
         }
 
@@ -98,7 +98,7 @@ namespace OnlineEvaluator.Repositories
             //    }
             //    return null;
             //}
-            
+
         }
     }
 }
