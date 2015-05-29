@@ -15,7 +15,6 @@ namespace OnlineEvaluator.Controllers
         [HttpPost]
         public ActionResult GenerateRandomTest(int domainId, int duration, List<int> selectedSubdomains)
         {
-
             TestService testService = new TestService();
             ICollection<Question> questions = testService.GenerateRandomQuestions(selectedSubdomains);
 
@@ -48,9 +47,9 @@ namespace OnlineEvaluator.Controllers
                 return new HttpStatusCodeResult(400);
             }
 
-
-
         }
+
+        
         // GET: Test
         [HttpPost]
         public ActionResult GenerateTest(int domainId, int duration, List<Int32> selectedSubdomains)

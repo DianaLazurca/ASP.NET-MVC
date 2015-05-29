@@ -9,6 +9,44 @@ namespace OnlineEvaluator.Services
 {
     public class TestService
     {
+
+        public ICollection<Question> GenerateRandom10QuestionsFromDomain(int domainId)
+        {
+            List<Question> randomSingleQuestions = new List<Question>();
+            List<Question> randomMQuestions = new List<Question>();
+            Random r = new Random();
+            List<Subdomain> allSubdomains = DomainRepository.GetSubdomainsForDomainById(domainId).ToList();
+
+            int nrOfSingleQuestions = r.Next(3, 6);
+
+            while (randomSingleQuestions.Count() != nrOfSingleQuestions)
+            {
+                int randomSub = r.Next(0, allSubdomains.Count());
+                List<Question> questions = SubdomainRepository.GetAllQuestionsOfTypeForSubdomainId(allSubdomains.ElementAt(randomSub).Id, false);
+
+                int eandomIdxQ = r.Next(0, questions.Count());
+
+                if (!randomSingleQuestions.Contains(questions.ElementAt(eandomIdxQ)))
+                {
+                    randomSingleQuestions.Add(questions.ElementAt(eandomIdxQ));
+                }
+            }
+
+            while (randomMQuestions.Count() != (10 - nrOfSingleQuestions))
+            {
+                int randomSub = r.Next(0, allSubdomains.Count());
+                List<Question> questions = SubdomainRepository.GetAllQuestionsOfTypeForSubdomainId(allSubdomains.ElementAt(randomSub).Id, true);
+
+                int eandomIdxQ = r.Next(0, questions.Count());
+
+                if (!randomMQuestions.Contains(questions.ElementAt(eandomIdxQ)))
+                {
+                    randomMQuestions.Add(questions.ElementAt(eandomIdxQ));
+                }
+            }
+
+            return randomMQuestions.Concat(randomSingleQuestions).ToList();
+        }
         public ICollection<Question> GenerateRandomQuestions(List<int> selectedSubdomains)
         {
             return QuestionRepository.GetQuestionsBySudomainIdList(selectedSubdomains);
