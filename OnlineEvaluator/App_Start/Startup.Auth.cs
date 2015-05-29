@@ -89,9 +89,9 @@ namespace OnlineEvaluator
                 context.SaveChanges();
             }
 
-            if (!context.Users.Any(u => u.UserName == "admin"))
+            if (!context.Users.Any(u => u.UserName == "admin@evaluator.com"))
             {
-                var user = new ApplicationUser { UserName = "admin", Email = "admin" };
+                var user = new ApplicationUser { UserName = "admin@evaluator.com", Email = "admin@evaluator.com" };
                 IdentityResult result = userManager.Create(user, "passW0rd!");
 
                 userManager.AddToRole(user.Id, "Admin");

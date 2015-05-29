@@ -24,5 +24,18 @@ namespace OnlineEvaluator.Controllers
             }
             
         }
+
+        [HttpPost]
+        public ActionResult FinishTest(int id, Evaluation evaluation)
+        {
+            evaluation = EvaluationRepository.UpdateEvaluation(id, evaluation);
+
+            if (evaluation != null) 
+            {
+                evaluation = EvaluationRepository.GetEvaluationById(evaluation.Id);
+            }
+
+            return new HttpStatusCodeResult(405);
+        }
     }
 }

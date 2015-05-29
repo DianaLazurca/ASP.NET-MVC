@@ -49,3 +49,63 @@ function stopTimer() {
     });
 
 };
+
+$("#finishTestButton").click(function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    var evaluation = {};
+
+    var evaluationId = parseInt($("#evaluation").attr('data-id'));
+
+    var givenAnswers = [];
+    var givenJustifications = [];
+
+    $(".question").each(function () {
+        var questionId = $(this).attr('data-id');
+
+        $(".question[data-id = '" + questionId + "'] .questionAnswer").each(function () {
+            var answerId = $(this).attr('data-id');
+            var givenAnswer = $(this).children('.answerCheck').first().is(":checked");
+
+            givenAnswers.push({
+                'EvaluationId': evaluationId,
+                'QuestionId': questionId,
+                'AnswerId': answerId,
+                'GivenAnswer': givenAnswer
+            });
+        });
+
+        var justification = $(".question[data-id = '" + questionId + "'] .questionJustification").val();
+
+        givenJustifications.push({
+            'EvaluationId': evaluationId,
+            'QuestionId': questionId,
+            'Justification': justification
+        });
+    });
+
+    evaluation["EvaluationAnswers"] = givenAnswers;
+    evaluation["EvaluationJustifications"] = givenJustifications;
+
+    //console.log(JSON.stringify(evaluation));
+
+    $.ajax({
+        method: "POST",
+        url: "http://localhost:7029/Evaluation/FinishTest/" + evaluationId,
+        data: JSON.stringify(evaluation),
+        contentType: 'application/json',
+        success: function () {
+            console.log('ieeei');
+        },
+        error: function () {
+            console.log("Something baad happened");
+        },
+        statusCode: {
+            400: function () {
+                console.log("Error at inserting a new question");
+            }
+        }
+
+    });
+});
