@@ -15,7 +15,7 @@
                     <h3 class="panel-title">Online Evaluator - Test</h3>
                 </div>
                 <div class="col-md-4">
-                    <div id="countdown" class="pull-right">Domain: <span id="tDomain">@Model.Test.Domain.Name</span>&nbsp; ; &nbsp;Time Left:&nbsp; <span>@Model.Test.Duration</span></div>
+                    <div id="countdown" class="pull-right">Domain: <span id="tDomain">@Model.Test.Domain.Name</span>&nbsp; ; &nbsp;Time Left:&nbsp; <span id="timeLeft">@Model.StartDate.AddMinutes(@Model.Test.Duration).Subtract(@DateTime.Now).Minutes</span></div>
                 </div>
             </div>
         </div>
@@ -43,6 +43,9 @@
 
             </ul>
 
+            <div id="result" class="alert alert-success hidden" >
+                <strong>Test submitted!</strong> <span id="correctAnswers"><strong></strong></span> correct answers, <span class="alert-danger" id="incorrectAnswers"><strong></strong></span> incorrect answers, <span class="alert-warning" id="score"><strong></strong></span> points
+            </div>
             <div class="testSubmitionTools pull-right" style="margin-right: 20px">
                 <button id="finishTestButton" class="btn btn-primary">Finish</button>
             </div>

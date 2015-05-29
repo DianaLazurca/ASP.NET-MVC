@@ -190,6 +190,7 @@
     <Compile Include="Models\Evaluation.cs" />
     <Compile Include="Models\EvaluationAnswer.cs" />
     <Compile Include="Models\EvaluationJustification.cs" />
+    <Compile Include="Models\EvaluationResult.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Question.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="Repositories\QuestionRepository.cs" />
     <Compile Include="Repositories\SubdomainRepository.cs" />
     <Compile Include="Repositories\TestRepository.cs" />
+    <Compile Include="Services\EvaluationService.cs" />
     <Compile Include="Services\TestService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

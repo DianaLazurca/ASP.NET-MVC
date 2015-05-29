@@ -24,7 +24,10 @@ namespace OnlineEvaluator.Repositories
         {
             using (var context = new ApplicationDbContext())
             {
-                return context.Evaluations.Include(ev => ev.Test.Questions).Include(ev => ev.Test.Domain)
+                return context.Evaluations
+                    .Include(ev => ev.Test)
+                    .Include(ev => ev.Test.Questions)
+                    .Include(ev => ev.Test.Domain)
                     .Include(ev => ev.Test.Questions.Select(q => q.Answers))
                     .Include(ev => ev.Test.Questions.Select(q => q.Subdomain))
                     .Include(ev => ev.EvaluationAnswers)
@@ -42,6 +45,7 @@ namespace OnlineEvaluator.Repositories
 
                 if (oldEvaluation != null)
                 {
+                    oldEvaluation.IsTaken = evaluation.IsTaken;
                     oldEvaluation.EvaluationAnswers = evaluation.EvaluationAnswers;
                     oldEvaluation.EvaluationJustifications = evaluation.EvaluationJustifications;
 

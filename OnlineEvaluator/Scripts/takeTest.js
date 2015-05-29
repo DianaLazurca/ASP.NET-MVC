@@ -4,11 +4,11 @@ function setMinutesToFinish(minutes) {
     target_date.setMinutes(target_date.getMinutes() + minutes);
 }
 
-setMinutesToFinish(1);
+setMinutesToFinish(parseInt($("#timeLeft").text()));
 
 var hours, minutes, seconds;
 
-var countdownContainer = document.getElementById("timeleftContainer");
+var countdown = document.getElementById("timeLeft");
 
 var timer = setInterval(function () { startTimer(); }, 100);
 
@@ -31,8 +31,9 @@ function startTimer() {
     } else if (hours == 0 && minutes == 0 && seconds != 0) {
         countdown.innerHTML = seconds + "s";
     } else if (hours == 0 && minutes == 0 && seconds == 0) {
-        stopTimer();
+        $("#finishTestButton").trigger('click');
         countdown.innerHTML = "No time left.";
+       
     }
 };
 
@@ -47,12 +48,15 @@ function stopTimer() {
     $.each($(".answerCheck"), function () {
         $(this).attr("onclick", "return false");
     });
-
 };
 
 $("#finishTestButton").click(function (event) {
     event.preventDefault();
     event.stopPropagation();
+
+    $(this).attr('disabled', 'disabled');
+    stopTimer();
+    countdown.innerHTML = "No time left.";
 
     var evaluation = {};
 
@@ -95,8 +99,11 @@ $("#finishTestButton").click(function (event) {
         url: "http://localhost:7029/Evaluation/FinishTest/" + evaluationId,
         data: JSON.stringify(evaluation),
         contentType: 'application/json',
-        success: function () {
-            console.log('ieeei');
+        success: function (data) {
+            $("#correctAnswers > strong").text(data.CorrectlyAnsweredQuestionsCount);
+            $("#incorrectAnswers > strong").text(data.IncorrectlyAnsweredQuestionsCount);
+            $("#score > strong").text(data.Score);
+            $("#result").removeClass("hidden");
         },
         error: function () {
             console.log("Something baad happened");

@@ -1,5 +1,6 @@
 ﻿using OnlineEvaluator.Models;
 using OnlineEvaluator.Repositories;
+using OnlineEvaluator.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,15 @@ namespace OnlineEvaluator.Controllers
         public ActionResult TakeTest(int id)
         {
             Evaluation evaluation = EvaluationRepository.GetEvaluationById(id);
-            if (evaluation != null)
+
+            if (evaluation == null)
+            {
+                return new HttpStatusCodeResult(404);
+            }
+
+            int minutesLeft = evaluation.StartDate.AddMinutes(evaluation.Test.Duration).Subtract(DateTime.Now).Minutes;
+
+            if (evaluation != null && evaluation.IsTaken == false && minutesLeft >= 1)
             {
                 return View(evaluation);
             }
@@ -28,14 +37,38 @@ namespace OnlineEvaluator.Controllers
         [HttpPost]
         public ActionResult FinishTest(int id, Evaluation evaluation)
         {
-            evaluation = EvaluationRepository.UpdateEvaluation(id, evaluation);
+            Evaluation oldEvaluation = EvaluationRepository.GetEvaluationById(id);
 
-            if (evaluation != null) 
+            if (oldEvaluation == null)
             {
-                evaluation = EvaluationRepository.GetEvaluationById(evaluation.Id);
+                return new HttpStatusCodeResult(400);
             }
 
-            return new HttpStatusCodeResult(405);
+            int secondsLeft = oldEvaluation.StartDate.AddMinutes(oldEvaluation.Test.Duration).Subtract(DateTime.Now).Seconds;
+
+            if (secondsLeft > -5 && oldEvaluation.IsTaken == false)
+            {
+                evaluation.IsTaken = true;
+                evaluation = EvaluationRepository.UpdateEvaluation(id, evaluation);
+
+                if (evaluation != null)
+                {
+                    evaluation = EvaluationRepository.GetEvaluationById(evaluation.Id);
+                    EvaluationService evaluationService = new EvaluationService();
+                    return Json(evaluationService.Evaluate(evaluation), JsonRequestBehavior.DenyGet);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(400);
+                }
+            }
+            else
+            {
+                return new HttpStatusCodeResult(400);
+            }
+            
+
+            
         }
     }
 }

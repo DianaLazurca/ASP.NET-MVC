@@ -26,6 +26,8 @@ namespace OnlineEvaluator.Models
 
         public int Points { get; set; }
 
+        public bool IsTaken { get; set; }
+
         public virtual ICollection<EvaluationAnswer> EvaluationAnswers { get; set; }
 
         public virtual ICollection<EvaluationJustification> EvaluationJustifications { get; set; }
