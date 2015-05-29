@@ -242,6 +242,7 @@
     <Content Include="Scripts\script.js" />
     <Content Include="Scripts\stud.js" />
     <Content Include="Scripts\subdomains.js" />
+    <Content Include="Scripts\takeTest.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

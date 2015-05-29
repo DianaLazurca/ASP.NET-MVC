@@ -24,7 +24,10 @@ namespace OnlineEvaluator.Repositories
         {
             using (var context = new ApplicationDbContext())
             {
-                return context.Evaluations.Include(ev => ev.Test.Questions).Where(x => x.Id == id).SingleOrDefault();
+                return context.Evaluations.Include(ev => ev.Test.Questions).Include(ev => ev.Test.Domain)
+                    .Include(ev => ev.Test.Questions.Select(q => q.Answers))
+                    .Include(ev => ev.Test.Questions.Select(q => q.Subdomain))
+                    .Where(x => x.Id == id).SingleOrDefault();
             }
         }
     }

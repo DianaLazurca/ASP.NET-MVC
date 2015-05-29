@@ -1,4 +1,5 @@
-﻿using OnlineEvaluator.Repositories;
+﻿using OnlineEvaluator.Models;
+using OnlineEvaluator.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,16 @@ namespace OnlineEvaluator.Controllers
         // GET: Evaluation
         public ActionResult TakeTest(int id)
         {
-            return View(EvaluationRepository.GetEvaluationById(id));
+            Evaluation evaluation = EvaluationRepository.GetEvaluationById(id);
+            if (evaluation != null)
+            {
+                return View(evaluation);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(404);
+            }
+            
         }
     }
 }

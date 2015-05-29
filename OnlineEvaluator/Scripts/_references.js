@@ -11,3 +11,4 @@
 /// <reference path="subdomains.js" />
 /// <reference path="addquestion.js" />
 /// <reference path="stud.js" />
+/// <reference path="taketest.js" />

@@ -112,7 +112,7 @@ $('#startTestBtn').on('click', function () {
         $.ajax({
 
             method: "POST",
-            url: "http://localhost:7029/Test/GenerateTest/",
+            url: "http://localhost:7029/Test/GenerateRandomTest/",
             contentType: 'application/json',
             data: jsonObj,
             success: function (data) {
