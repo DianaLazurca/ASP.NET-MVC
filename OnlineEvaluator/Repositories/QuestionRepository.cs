@@ -45,6 +45,15 @@ namespace OnlineEvaluator.Repositories
             }
         }
 
+
+       public static ICollection<Question> GetQuestionsBySudomainIdList(List<int> subdomainIdList)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                return context.Questions.Include(q => q.Answers).Where(q => subdomainIdList.Contains(q.SubdomainId)).ToList();
+            }
+        }
+
         public static bool EditQuestion(int questionId, Question editedQuestion) 
         {
             using(var context = new ApplicationDbContext())

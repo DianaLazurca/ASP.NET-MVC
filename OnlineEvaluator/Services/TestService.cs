@@ -9,10 +9,15 @@ namespace OnlineEvaluator.Services
 {
     public class TestService
     {
+        public ICollection<Question> GenerateRandomQuestions(List<int> selectedSubdomains)
+        {
+            return QuestionRepository.GetQuestionsBySudomainIdList(selectedSubdomains);
+        }
 
         public List<Question> GenerateTestListOfQuestions(List<int> subdomainsIds)
         {
             List<Question> finalListWithQuestions = new List<Question>();
+
             List<Question> questionsWithMultipleAnswers = new List<Question>();
             List<Question> questionsWithSingleAnswer = new List<Question>();
             int HowManyQuestionsForEachSubdomain;
@@ -43,19 +48,21 @@ namespace OnlineEvaluator.Services
                         List<Question> allSingleAnswerQuestionsForSUbdomaID = SubdomainRepository.GetAllQuestionsOfTypeForSubdomainId(subdomainsIds.ElementAt(i), false);
                         List<Question> allMultipleAnswerQuestionsForSUbdomainID = SubdomainRepository.GetAllQuestionsOfTypeForSubdomainId(subdomainsIds.ElementAt(i), true);
 
-                        nrOfQuestionsWithSingleAnswer = randomGenerator.Next(0, HowManyQuestionsForEachSubdomain/2);
-
-                        while (allSingles.Count() != allSingles.Count() + nrOfQuestionsWithSingleAnswer)
+                        nrOfQuestionsWithSingleAnswer = randomGenerator.Next(2, HowManyQuestionsForEachSubdomain);
+                        int oldValue = allSingles.Count();
+                        while (allSingles.Count() != oldValue + nrOfQuestionsWithSingleAnswer)
                         {
                             int randomIndexOfQuestion = randomGenerator.Next(0, allSingleAnswerQuestionsForSUbdomaID.Count());
 
-                            if (!allSingles.Contains(allSingleAnswerQuestionsForSUbdomaID.ElementAt(randomIndexOfQuestion))) {
+                            if (!allSingles.Contains(allSingleAnswerQuestionsForSUbdomaID.ElementAt(randomIndexOfQuestion))) 
+                            {
 
                                 allSingles.Add(allSingleAnswerQuestionsForSUbdomaID.ElementAt(randomIndexOfQuestion));
                             }
                         }
-
-                        while (allMultiples.Count != allMultiples.Count() + (HowManyQuestionsForEachSubdomain - nrOfQuestionsWithSingleAnswer))
+                        oldValue = allMultiples.Count();
+                        int  nrOfQuestionsWithMultipleAnswer = Math.Max(randomGenerator.Next(3, HowManyQuestionsForEachSubdomain + 1), HowManyQuestionsForEachSubdomain - nrOfQuestionsWithSingleAnswer);
+                        while (allMultiples.Count != oldValue + nrOfQuestionsWithMultipleAnswer)
                         {
                             int randomIndexOfQuestion = randomGenerator.Next(0, allMultipleAnswerQuestionsForSUbdomainID.Count());
 

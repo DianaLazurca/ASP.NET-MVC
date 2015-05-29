@@ -12,8 +12,13 @@ namespace OnlineEvaluator.Repositories
 
         public static Test AddTest(Test test)
         {
+           
             using (var context = new ApplicationDbContext())
             {
+               foreach (Question question in test.Questions)
+                {
+                    context.Questions.Attach(question);
+                }
                 context.Tests.Add(test);
                 context.SaveChanges();
                 return test;

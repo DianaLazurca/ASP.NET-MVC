@@ -48,15 +48,20 @@ namespace OnlineEvaluator.Repositories
 
         public static List<Question> GetAllQuestionsOfTypeForSubdomainId(int subdomainId, bool isMultiple)
         {
+            //using (var context = new ApplicationDbContext())
+            //{
+            //    Subdomain subdomain = context.Subdomains.Include("Questions").Where(x => x.Id == subdomainId).SingleOrDefault();
+
+            //    if (subdomain != null)
+            //    {
+            //        return subdomain.Questions.Where(x => x.IsMultiple == isMultiple).ToList();
+            //    }
+            //    return null;
+            //}
+
             using (var context = new ApplicationDbContext())
             {
-                Subdomain subdomain = context.Subdomains.Include("Questions").Where(x => x.Id == subdomainId).SingleOrDefault();
-
-                if (subdomain != null)
-                {
-                    return subdomain.Questions.Where(x => x.IsMultiple == isMultiple).ToList();
-                }
-                return null;
+                return context.Questions.Include(q => q.Answers).Where(q => (q.SubdomainId == subdomainId) && (q.IsMultiple == isMultiple)).ToList();
             }
         }
 
@@ -78,17 +83,22 @@ namespace OnlineEvaluator.Repositories
             return false;
         }
 
-        internal static List<Question> GetQuestionsForSubdomainById(int id)
+        public static List<Question> GetQuestionsForSubdomainById(int id)
         {
             using (var context = new ApplicationDbContext())
             {
-                var subdomain = context.Subdomains.Include("Questions").Where(x => x.Id == id).FirstOrDefault();
-                if (subdomain != null)
-                {
-                    return subdomain.Questions.ToList();
-                }
-                return null;
+                return context.Questions.Include(q => q.Answers).Where(q => q.SubdomainId == id).ToList();
             }
+            //using (var context = new ApplicationDbContext())
+            //{
+            //    var subdomain = context.Subdomains.Include("Questions").Where(x => x.Id == id).FirstOrDefault();
+            //    if (subdomain != null)
+            //    {
+            //        return subdomain.Questions.ToList();
+            //    }
+            //    return null;
+            //}
+            
         }
     }
 }

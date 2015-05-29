@@ -71,28 +71,28 @@
 //    // get all quesrions for the selected somain
 //});
 
-$('#allQuestions').on('click', 'a:first-child', function(){
-    // console.log(this);
+//$('#allQuestions').on('click', 'a:first-child', function(){
+//    // console.log(this);
 
-    $.ajax({
-        method: "POST",
-        url: "http://localhost:7029/Test/GenerateTest/",
-        contentType: 'application/json',
-        data: JSON.stringify({
-            'selectedSubdomains': [
-               1,
-               2,
-               3,
-               4
-            ]
-        }),
-    success : function() {
-         console.log("ceva");
+//    $.ajax({
+//        method: "POST",
+//        url: "http://localhost:7029/Test/GenerateTest/",
+//        contentType: 'application/json',
+//        data: JSON.stringify({
+//            'selectedSubdomains': [
+//               1,
+//               2,
+//               3,
+//               4
+//            ]
+//        }),
+//    success : function() {
+//         console.log("ceva");
         
-    },
-    error : function() {
-        console.log("SOmething wrong happend with post to Generate Test")
-    }
+//    },
+//    error : function() {
+//        console.log("SOmething wrong happend with post to Generate Test")
+//    }
 
-    });
-});
+//    });
+//});

@@ -12,6 +12,45 @@ namespace OnlineEvaluator.Controllers
 {
     public class TestController : Controller
     {
+        [HttpPost]
+        public ActionResult GenerateRandomTest(int domainId, int duration, List<int> selectedSubdomains)
+        {
+
+            TestService testService = new TestService();
+            ICollection<Question> questions = testService.GenerateRandomQuestions(selectedSubdomains);
+
+            Test test = new Test
+            {
+                CreationDate = DateTime.Now,
+                DomainId = domainId,
+                Duration = duration,
+                Questions = questions,
+                Name = "RandomTest"
+            };
+
+            test = TestRepository.AddTest(test);
+
+            Evaluation evaluation = new Evaluation
+            {
+                ApplicationUserId = User.Identity.GetUserId(),
+                StartDate = DateTime.Now,
+                TestId = test.Id
+            };
+
+            evaluation = EvaluationRepository.AddEvaluation(evaluation);
+
+            if (evaluation != null)
+            {
+                return Json(new { id = evaluation.Id });
+            }
+            else
+            {
+                return new HttpStatusCodeResult(400);
+            }
+
+
+
+        }
         // GET: Test
         [HttpPost]
         public ActionResult GenerateTest(int domainId, int duration, List<Int32> selectedSubdomains)
@@ -21,13 +60,16 @@ namespace OnlineEvaluator.Controllers
                 TestService  testService = new TestService();
                 List<Question> allQuestions = testService.GenerateTestListOfQuestions(selectedSubdomains);
 
+
                 if (allQuestions != null && allQuestions.Count() > 0) 
                 {
                     Test test = new Test
                     {
                         DomainId = domainId,
                         Duration = duration,
-                        Questions = allQuestions
+                        Questions = allQuestions,
+                        Name = "Random Test",
+                        CreationDate = DateTime.Now
                     };
 
                     test = TestRepository.AddTest(test);
