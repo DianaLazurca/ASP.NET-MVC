@@ -12,3 +12,4 @@
 /// <reference path="addquestion.js" />
 /// <reference path="stud.js" />
 /// <reference path="taketest.js" />
+/// <reference path="demo.js" />

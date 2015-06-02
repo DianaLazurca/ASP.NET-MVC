@@ -112,11 +112,11 @@ $('#startTestBtn').on('click', function () {
         $.ajax({
 
             method: "POST",
-            url: "http://localhost:7029/Test/GenerateRandomTest/",
+            url: "http://localhost:7029/Test/GenerateTest/",
             contentType: 'application/json',
             data: jsonObj,
             success: function (data) {
-                console.log("Success");
+                window.location = "http://localhost:7029/Evaluation/TakeTest/" + data.evaluationId;
             },
             error: function () {
                 console.log("Test generation request failed.");
@@ -126,4 +126,33 @@ $('#startTestBtn').on('click', function () {
 
     }
 
+});
+
+$('#startDemoButton').on('click', function () {
+
+    var duration = $('#startTestTime').val();
+    var chosenSubdomains = {};
+    chosenSubdomains["selectedSubdomains"] = [];
+
+    if (duration == "") {
+        alert("You must specify a time interval !");
+        return false;
+    } else {
+
+        $.each($('#allSubdomains a[class ~= "active"]'), function () {
+
+            chosenSubdomains["selectedSubdomains"].push(parseInt($(this).attr('data-id')));
+
+        });
+        var currentSelectedDomain = $('#allDomains a[class ~= "active"]');
+        var domainId = $(currentSelectedDomain).attr('data-id');
+
+        chosenSubdomains["domainId"] = parseInt(domainId);
+        chosenSubdomains["duration"] = parseInt(duration);
+
+        var jsonObj = JSON.stringify(chosenSubdomains);
+
+        window.location = "http://localhost:7029/Demo/Demo/?duration=" + duration + "&domainId=" + domainId;
+
+    }
 });

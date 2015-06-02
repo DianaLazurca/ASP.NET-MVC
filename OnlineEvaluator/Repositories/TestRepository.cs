@@ -17,6 +17,7 @@ namespace OnlineEvaluator.Repositories
             {
                foreach (Question question in test.Questions)
                 {
+                    question.Subdomain = null;
                     context.Questions.Attach(question);
                 }
                 context.Tests.Add(test);
